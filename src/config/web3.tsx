@@ -3,7 +3,7 @@ import { createAppKit } from '@reown/appkit/react';
 import { WagmiProvider } from 'wagmi';
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { bohrTestnet } from './chain';
+import { botMainnet } from './chain';
 
 // 1. Setup QueryClient
 export const queryClient = new QueryClient({
@@ -21,14 +21,14 @@ export const projectId = import.meta.env.VITE_REOWN_PROJECT_ID || '0000000000000
 // 3. Metadata
 const metadata = {
   name: 'BOT Airdrop Distributor',
-  description: 'High-speed, gas-optimized bulk token distributor for Bohr Chain',
-  url: 'https://scan.bohr.life',
-  icons: ['https://scan.bohr.life/favicon.ico'],
+  description: 'High-speed, gas-optimized bulk token distributor on BotChain Mainnet (Chain ID: 677)',
+  url: 'https://scan.botchain.ai',
+  icons: ['https://scan.botchain.ai/favicon.ico'],
 };
 
 // 4. Create Wagmi Adapter
 export const wagmiAdapter = new WagmiAdapter({
-  networks: [bohrTestnet],
+  networks: [botMainnet],
   projectId,
   ssr: false,
 });
@@ -36,8 +36,8 @@ export const wagmiAdapter = new WagmiAdapter({
 // 5. Initialize AppKit Modal
 createAppKit({
   adapters: [wagmiAdapter],
-  networks: [bohrTestnet],
-  defaultNetwork: bohrTestnet,
+  networks: [botMainnet],
+  defaultNetwork: botMainnet,
   projectId,
   metadata,
   features: {

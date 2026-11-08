@@ -17,7 +17,6 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
         return res.text();
       })
       .catch(() => {
-        // Fallback text if public fetch doesn't resolve directly
         return '# BOT Airdrop Distributor Whitepaper\n\nVisit repository for full text.';
       })
       .then((content) => {
@@ -57,7 +56,7 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
                 Protocol Whitepaper
               </h2>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
-                BOT Airdrop Distributor v1.0.0 • Bohr Chain (Chain ID: 968)
+                BOT Airdrop Distributor v1.2.0 • BotChain Mainnet (Chain ID: 677)
               </p>
             </div>
           </div>
@@ -106,7 +105,7 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
                 <Cpu size={16} />
                 <span>Gas Efficiency</span>
               </div>
-              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff' }}>~43.5% Savings</div>
+              <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff' }}>~43.5% - 65% Savings</div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>Calldata + unchecked loop increments</div>
             </div>
 
@@ -133,44 +132,38 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
             1. Abstract
           </h3>
           <p style={{ marginBottom: '18px' }}>
-            The <strong>BOT Airdrop Distributor Protocol</strong> provides a trustless, non-custodial batch dispersal mechanism engineered specifically for the Bohr Chain ecosystem (Chain ID 968). By leveraging EVM calldata arrays, low-level inline function selectors, and client-side deterministic batch chunking, the protocol eliminates the manual friction and high gas costs of individual wallet payments.
+            The <strong>BOT Airdrop Distributor Protocol</strong> provides a trustless, non-custodial batch dispersal mechanism engineered for the BotChain ecosystem (Mainnet Chain ID: 677). Powered by the native BOT token (Total Supply: 150 Million), the protocol eliminates the manual friction, sequential signing fatigue, and compounding gas costs of individual wallet payments.
           </p>
 
           <h3 style={{ color: '#fff', fontSize: '1.15rem', fontWeight: 700, marginBottom: '10px' }}>
-            2. The Distribution Bottleneck
+            2. Network & Contract Specifications
           </h3>
-          <p style={{ marginBottom: '18px' }}>
-            Distributing tokens to hundreds or thousands of wallets traditionally presents severe problems:
-          </p>
-          <ul style={{ paddingLeft: '22px', marginBottom: '18px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <li><strong>Gas Multipliers:</strong> Sending 500 individual transactions incurs $500 \times 21,000 = 10,500,000$ base gas overhead alone.</li>
-            <li><strong>Block Limit Reverts:</strong> Unchunked batch transfers that attempt to process over 200 wallets in one call inevitably exceed EVM block gas limits, causing transactions to revert.</li>
-            <li><strong>Non-Standard Tokens:</strong> Tokens like USDT return void on <code>transferFrom</code>, which breaks standard Solidity contract interfaces.</li>
-          </ul>
-
-          <h3 style={{ color: '#fff', fontSize: '1.15rem', fontWeight: 700, marginBottom: '10px' }}>
-            3. Smart Contract Implementation & Verification
-          </h3>
-          <p style={{ marginBottom: '12px' }}>
-            The protocol is deployed and verified on Bohr Chain:
-          </p>
           <div
             style={{
-              padding: '14px 18px',
+              padding: '16px 20px',
               background: '#090d16',
               borderRadius: 'var(--radius-md)',
               border: '1px solid var(--border-subtle)',
               fontFamily: 'var(--font-mono)',
               fontSize: '0.84rem',
               marginBottom: '20px',
+              display: 'grid',
+              gap: '8px',
             }}
           >
-            <div>Contract: <a href="https://scan.bohr.life/address/0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20" target="_blank" rel="noreferrer" style={{ color: '#38bdf8' }}>0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20</a></div>
-            <div style={{ marginTop: '4px', color: 'var(--text-dim)' }}>Tx: 0x804a28118995dd1b2acc0110d27f721eca548e50e674919534b438c9af3fdcd9</div>
+            <div><strong>Mainnet Network:</strong> BotChain Mainnet</div>
+            <div><strong>Chain ID:</strong> 677 (Hex: 0x2a5)</div>
+            <div><strong>Native Token:</strong> BOT (18 Decimals, Total Supply: 150 Million)</div>
+            <div><strong>RPC Endpoint:</strong> <span style={{ color: '#38bdf8' }}>https://rpc.botchain.ai</span></div>
+            <div><strong>Block Explorer:</strong> <a href="https://scan.botchain.ai" target="_blank" rel="noreferrer" style={{ color: '#38bdf8' }}>https://scan.botchain.ai</a></div>
+            <div style={{ marginTop: '4px', paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+              <div><strong>Deployed Contract:</strong> <a href="https://scan.botchain.ai/address/0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20" target="_blank" rel="noreferrer" style={{ color: '#10b981' }}>0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20</a></div>
+              <div style={{ marginTop: '4px', color: 'var(--text-dim)' }}><strong>Deployment Tx:</strong> 0x190a85d5512757c33169555c4f0defa10d23ee05840acbbc4ea3e43af60fee23</div>
+            </div>
           </div>
 
           <h3 style={{ color: '#fff', fontSize: '1.15rem', fontWeight: 700, marginBottom: '10px' }}>
-            4. Dual Support: ERC-20 & Native BOT
+            3. Dual Support: ERC-20 & Native BOT
           </h3>
           <p style={{ marginBottom: '24px' }}>
             The protocol provides dedicated functions for both asset classes:
@@ -193,7 +186,7 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
           }}
         >
           <a
-            href="https://scan.bohr.life/address/0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20"
+            href="https://scan.botchain.ai/address/0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20"
             target="_blank"
             rel="noreferrer"
             style={{
@@ -205,7 +198,7 @@ export const WhitepaperModal: React.FC<WhitepaperModalProps> = ({ isOpen, onClos
               textDecoration: 'none',
             }}
           >
-            <span>Verified on BohrScan</span>
+            <span>Verified on BotScan Mainnet</span>
             <ExternalLink size={13} />
           </a>
 

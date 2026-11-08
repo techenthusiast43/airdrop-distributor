@@ -3,7 +3,7 @@ pragma solidity ^0.8.20;
 
 /**
  * @title AirdropDistributor
- * @notice Gas-optimized batch distributor for ERC-20 tokens and native BOT on Bohr Chain (Chain ID 968).
+ * @notice Gas-optimized batch distributor for ERC-20 tokens and native BOT on BotChain Mainnet (Chain ID 677).
  * @dev Fully non-custodial: user approves contract and calls airdrop in a single atomic flow.
  */
 interface IERC20Minimal {

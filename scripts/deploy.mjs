@@ -49,36 +49,39 @@ if (!rawPrivateKey) {
 
 const formattedKey = rawPrivateKey.startsWith('0x') ? rawPrivateKey : `0x${rawPrivateKey}`;
 
-// 2. Setup Bohr Chain
-const bohrTestnet = {
-  id: 968,
-  name: 'Bohr Chain Testnet',
+// 2. Network Definition
+const botMainnet = {
+  id: 677,
+  name: 'BotChain Mainnet',
   nativeCurrency: { decimals: 18, name: 'BOT', symbol: 'BOT' },
   rpcUrls: {
-    default: { http: ['https://rpc.bohr.life/'] },
+    default: { http: ['https://rpc.botchain.ai'] },
   },
   blockExplorers: {
-    default: { name: 'BohrScan', url: 'https://scan.bohr.life' },
+    default: { name: 'BotScan', url: 'https://scan.botchain.ai' },
   },
 };
 
+const targetNetwork = botMainnet;
+
 async function main() {
-  console.log('\x1b[36m%s\x1b[0m', '=== Deploying AirdropDistributor to Bohr Chain ===');
-  console.log(`Network: ${bohrTestnet.name} (Chain ID: ${bohrTestnet.id})`);
-  console.log(`RPC: ${bohrTestnet.rpcUrls.default.http[0]}`);
+  console.log('\x1b[36m%s\x1b[0m', `=== Deploying AirdropDistributor to ${targetNetwork.name} ===`);
+  console.log(`Network   : ${targetNetwork.name} (Chain ID: ${targetNetwork.id})`);
+  console.log(`RPC URL   : ${targetNetwork.rpcUrls.default.http[0]}`);
+  console.log(`Explorer  : ${targetNetwork.blockExplorers.default.url}`);
 
   const account = privateKeyToAccount(formattedKey);
-  console.log(`Deployer Address: \x1b[32m${account.address}\x1b[0m`);
+  console.log(`\nDeployer Address: \x1b[32m${account.address}\x1b[0m`);
 
   const publicClient = createPublicClient({
-    chain: bohrTestnet,
-    transport: http('https://rpc.bohr.life/'),
+    chain: targetNetwork,
+    transport: http(targetNetwork.rpcUrls.default.http[0]),
   });
 
   const walletClient = createWalletClient({
     account,
-    chain: bohrTestnet,
-    transport: http('https://rpc.bohr.life/'),
+    chain: targetNetwork,
+    transport: http(targetNetwork.rpcUrls.default.http[0]),
   });
 
   // Check balance
@@ -86,7 +89,10 @@ async function main() {
   console.log(`Deployer BOT Balance: \x1b[33m${formatEther(balance)} BOT\x1b[0m`);
 
   if (balance === 0n) {
-    console.error('\x1b[31m%s\x1b[0m', 'Error: Deployer wallet has 0 BOT balance. Please fund it with testnet BOT.');
+    console.error('\n\x1b[31m%s\x1b[0m', `Error: Deployer wallet has 0 BOT balance on ${targetNetwork.name}.`);
+    console.log(`\nPlease send a small amount of BOT (e.g. 0.05 - 0.2 BOT) to:`);
+    console.log(`\x1b[32m${account.address}\x1b[0m`);
+    console.log(`to cover smart contract deployment gas on Chain ID ${targetNetwork.id}.\n`);
     process.exit(1);
   }
 
@@ -143,22 +149,22 @@ async function main() {
   const abi = contractOutput.abi;
 
   console.log('\x1b[32m%s\x1b[0m', 'Compilation successful!');
-  console.log('Sending deployment transaction to Bohr Chain...');
+  console.log(`Broadcasting deployment transaction to ${targetNetwork.name}...`);
 
   const deployTxHash = await walletClient.deployContract({
     abi,
     bytecode,
   });
 
-  console.log(`Deployment Tx Hash: \x1b[36m${deployTxHash}\x1b[0m`);
-  console.log(`Explorer: https://scan.bohr.life/tx/${deployTxHash}`);
+  console.log(`Deployment Tx Hash : \x1b[36m${deployTxHash}\x1b[0m`);
+  console.log(`Explorer Link      : ${targetNetwork.blockExplorers.default.url}/tx/${deployTxHash}`);
   console.log('Waiting for block confirmation...');
 
   const receipt = await publicClient.waitForTransactionReceipt({ hash: deployTxHash });
 
   const contractAddress = receipt.contractAddress;
   console.log('\n\x1b[32m%s\x1b[0m', `✓ Contract successfully deployed at: ${contractAddress}`);
-  console.log(`Explorer Link: https://scan.bohr.life/address/${contractAddress}`);
+  console.log(`Explorer Link: ${targetNetwork.blockExplorers.default.url}/address/${contractAddress}`);
 
   // Automatically update .env with new contract address
   let envFileContent = fs.readFileSync(envPath, 'utf8');
@@ -173,7 +179,7 @@ async function main() {
   fs.writeFileSync(envPath, envFileContent, 'utf8');
   console.log('\x1b[32m%s\x1b[0m', `✓ Updated .env with VITE_DISTRIBUTOR_CONTRACT_ADDRESS=${contractAddress}`);
 
-  console.log('\n🎉 Ready! Run `npm run dev` to start distributing tokens.');
+  console.log('\n🎉 Ready! Run `npm run dev` to start distributing tokens on Mainnet.');
 }
 
 main().catch((err) => {

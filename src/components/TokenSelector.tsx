@@ -4,6 +4,7 @@ import { isAddress, getAddress } from 'viem';
 import { Coins, CircleDollarSign, AlertCircle, ExternalLink, RefreshCw } from 'lucide-react';
 import { ERC20_ABI } from '../contracts/distributorAbi';
 import { formatTokenAmount } from '../utils/formatters';
+import { getExplorerAddressUrl, getExplorerName } from '../config/chain';
 import type { TokenMode, TokenMetadata } from '../types';
 
 interface TokenSelectorProps {
@@ -23,8 +24,11 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
   tokenAddressInput,
   onTokenAddressInputChange,
 }) => {
-  const { address: userAddress, isConnected } = useAccount();
+  const { address: userAddress, isConnected, chain } = useAccount();
   const [addressError, setAddressError] = useState<string | null>(null);
+
+  const chainId = chain?.id;
+  const explorerName = getExplorerName(chainId);
 
   const isValidInput = isAddress(tokenAddressInput.trim());
   const formattedTokenAddress = isValidInput ? (getAddress(tokenAddressInput.trim()) as `0x${string}`) : undefined;
@@ -73,7 +77,7 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
     }
 
     if (!isValidInput) {
-      setAddressError('Please enter a valid Bohr Chain contract address');
+      setAddressError('Please enter a valid contract address');
       onTokenMetadataChange(null);
       return;
     }
@@ -95,7 +99,7 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
         formattedBalance: formatTokenAmount(balance, decimals, 4),
       });
     } else if (isError) {
-      setAddressError('Could not fetch token details. Verify the contract address on BohrScan.');
+      setAddressError(`Could not fetch token details. Verify the contract address on ${explorerName}.`);
       onTokenMetadataChange(null);
     }
   }, [data, isError, isValidInput, tokenAddressInput, tokenMode, formattedTokenAddress, onTokenMetadataChange]);
@@ -130,7 +134,7 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
 
       {tokenMode === 'ERC20' ? (
         <div>
-          <label className="input-label">ERC-20 Token Contract Address on Bohr Chain</label>
+          <label className="input-label">ERC-20 Token Contract Address</label>
           <div style={{ display: 'flex', gap: '10px' }}>
             <input
               type="text"
@@ -184,7 +188,7 @@ export const TokenSelector: React.FC<TokenSelectorProps> = ({
                   </span>
                 </div>
                 <a
-                  href={`https://scan.bohr.life/address/${tokenMetadata.address}`}
+                  href={getExplorerAddressUrl(tokenMetadata.address, chainId)}
                   target="_blank"
                   rel="noreferrer"
                   style={{

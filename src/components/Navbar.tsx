@@ -37,7 +37,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <h1 className="brand-title">BOT Airdrop Distributor</h1>
             <span className="chain-badge">
               <span className="pulse-dot"></span>
-              Bohr Testnet (968)
+              BotChain Mainnet (677)
             </span>
           </div>
           <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>

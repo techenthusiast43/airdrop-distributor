@@ -8,6 +8,7 @@ import { TokenSelector } from './components/TokenSelector';
 import { RecipientInput } from './components/RecipientInput';
 import { ReviewSection } from './components/ReviewSection';
 import { ExecutionSection } from './components/ExecutionSection';
+import { Footer } from './components/Footer';
 import { parseRecipientsInput } from './utils/parser';
 import { chunkRecipientsIntoBatches } from './utils/formatters';
 import type { TokenMode, TokenMetadata } from './types';
@@ -20,7 +21,7 @@ function AirdropApp() {
   // 1. Contract Address State
   const defaultEnvContract = import.meta.env.VITE_DISTRIBUTOR_CONTRACT_ADDRESS || '';
   const [contractAddress, setContractAddress] = useState<string>(() => {
-    return localStorage.getItem('bohr_distributor_address') || defaultEnvContract;
+    return localStorage.getItem('botchain_distributor_address') || localStorage.getItem('bohr_distributor_address') || defaultEnvContract;
   });
   const [isContractModalOpen, setIsContractModalOpen] = useState(false);
   const [isWhitepaperModalOpen, setIsWhitepaperModalOpen] = useState(false);
@@ -56,7 +57,7 @@ function AirdropApp() {
   // Handlers
   const handleSaveContract = (addr: string) => {
     setContractAddress(addr);
-    localStorage.setItem('bohr_distributor_address', addr);
+    localStorage.setItem('botchain_distributor_address', addr);
   };
 
   const handleClear = () => {
@@ -228,6 +229,12 @@ function AirdropApp() {
           />
         </div>
       )}
+
+      <Footer
+        onOpenWhitepaperModal={() => setIsWhitepaperModalOpen(true)}
+        onOpenContractModal={() => setIsContractModalOpen(true)}
+        contractAddress={contractAddress}
+      />
 
       <ContractModal
         isOpen={isContractModalOpen}

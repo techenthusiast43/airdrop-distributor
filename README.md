@@ -1,12 +1,13 @@
 # BOT Airdrop Distributor 🚀
 
-[![Network: Bohr Chain](https://img.shields.io/badge/Network-Bohr%20Chain%20(968)-blue.svg)](https://scan.bohr.life)
+[![Network: BotChain Mainnet](https://img.shields.io/badge/Network-BotChain%20Mainnet%20(677)-blue.svg)](https://scan.botchain.ai)
+[![Contract: Verified](https://img.shields.io/badge/Contract-0x93bb...6c20-green.svg)](https://scan.botchain.ai/address/0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![React](https://img.shields.io/badge/React-19-61dafb.svg)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-8-646cff.svg)](https://vite.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6.svg)](https://www.typescriptlang.org)
 
-**BOT Airdrop Distributor** is a high-performance, gas-optimized, and non-custodial decentralized bulk token distribution protocol built specifically for **Bohr Chain (Chain ID: `968`)**. It enables project creators, DAOs, and community managers to distribute native BOT coins and ERC-20 tokens to hundreds or thousands of recipients in batched atomic transactions, saving up to **65% on gas fees**.
+**BOT Airdrop Distributor** is a high-performance, gas-optimized, and non-custodial decentralized bulk token distribution protocol built for **BotChain Mainnet (Chain ID: `677`)**. It enables project creators, DAOs, and community managers to distribute native BOT coins (Total Supply: 150M) and ERC-20 tokens to hundreds or thousands of recipients in batched atomic transactions, saving up to **65% on gas fees**.
 
 ---
 
@@ -21,21 +22,23 @@
   - Upload CSV or TXT files via drag-and-drop
   - Real-time address checksum validation & balance checks
   - Configurable duplicate handling: **Merge amounts**, **Deduplicate**, or **Keep all**
-- **📜 Verified Smart Contract Integration**: Dynamic contract address switching with preset Bohr Chain testnet contract deployment.
+- **📜 Verified Mainnet Contract**: Fully deployed and verified on BotChain Mainnet ([0x93bb...6c20](https://scan.botchain.ai/address/0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20)).
 - **📖 Embedded Whitepaper**: Full protocol documentation, security audits, and architectural specifications viewable inside the application.
 
 ---
 
-## 🏗️ Deployed Contracts
+## 🌐 Network Specifications
 
 | Parameter | Value |
 |---|---|
-| **Network** | Bohr Chain Testnet |
-| **Chain ID** | `968` |
+| **Network** | BotChain Mainnet |
+| **Chain ID** | `677` (Hex: `0x2a5`) |
 | **Native Token** | BOT (18 Decimals) |
-| **Contract Address** | [`0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20`](https://scan.bohr.life/address/0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20) |
-| **Block Explorer** | [scan.bohr.life](https://scan.bohr.life) |
-| **RPC Endpoint** | `https://rpc.bohr.life/` |
+| **Total Supply** | 150 Million BOT |
+| **Contract Address** | [`0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20`](https://scan.botchain.ai/address/0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20) |
+| **Deployment Tx Hash** | [`0x190a85d5512757c33169555c4f0defa10d23ee05840acbbc4ea3e43af60fee23`](https://scan.botchain.ai/tx/0x190a85d5512757c33169555c4f0defa10d23ee05840acbbc4ea3e43af60fee23) |
+| **Block Explorer** | [scan.botchain.ai](https://scan.botchain.ai) |
+| **RPC Endpoint** | `https://rpc.botchain.ai` |
 
 ---
 
@@ -62,25 +65,18 @@ cd airdrop-distributor
 npm install
 ```
 
-### 3. Configure Environment Variables
-Copy `.env.example` to `.env` and supply your AppKit Project ID and deployment settings:
-```bash
-cp .env.example .env
-```
-
-Edit `.env`:
+### 3. Environment Variables
+Copy `.env.example` to `.env` and provide your Reown Project ID:
 ```env
-VITE_REOWN_PROJECT_ID="your_reown_project_id_here"
-VITE_DISTRIBUTOR_CONTRACT_ADDRESS="0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20"
-PRIVATE_KEY=""
-RPC_URL="https://rpc.bohr.life/"
+VITE_REOWN_PROJECT_ID=your_reown_project_id
+VITE_DISTRIBUTOR_CONTRACT_ADDRESS=0x93bb84ed7826c1b4e667caab570c4a54c6ed6c20
+PRIVATE_KEY=your_private_key_here
 ```
 
 ### 4. Run Development Server
 ```bash
 npm run dev
 ```
-Open your browser at `http://localhost:5173`.
 
 ### 5. Build for Production
 ```bash
@@ -89,17 +85,8 @@ npm run build
 
 ---
 
-## 📜 Smart Contract Architecture
-
-The core contract is located at [`contracts/AirdropDistributor.sol`](contracts/AirdropDistributor.sol).
-
-### Key Functions
-- `airdropNative(address payable[] calldata recipients, uint256[] calldata amounts) external payable`:
-  Dispatches native BOT in a loop, validating matching values and automatically refunding any excess msg.value.
-- `airdropERC20(address token, address[] calldata recipients, uint256[] calldata amounts) external`:
-  Transfers ERC-20 tokens using `_safeTransferFrom`, safely handling both standard boolean and non-standard void-returning ERC-20 contracts.
-
-To deploy a new contract instance:
+## 📜 Contract Deployment
+To deploy your own copy of the contract to BotChain Mainnet:
 ```bash
 npm run deploy
 ```
@@ -107,5 +94,4 @@ npm run deploy
 ---
 
 ## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
+This project is open-source under the [MIT License](LICENSE).

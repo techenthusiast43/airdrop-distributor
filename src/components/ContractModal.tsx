@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { isAddress, getAddress } from 'viem';
 import { X, Check, AlertCircle, Terminal, ExternalLink } from 'lucide-react';
+import { getExplorerAddressUrl } from '../config/chain';
 
 interface ContractModalProps {
   isOpen: boolean;
@@ -53,7 +54,7 @@ export const ContractModal: React.FC<ContractModalProps> = ({
         </div>
 
         <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginBottom: '18px' }}>
-          Specify the deployed <code>AirdropDistributor</code> smart contract on Bohr Chain (Chain ID: 968).
+          Specify the deployed <code>AirdropDistributor</code> smart contract on <strong>BotChain Mainnet (Chain ID: 677)</strong>.
         </p>
 
         <div style={{ marginBottom: '20px' }}>
@@ -79,7 +80,7 @@ export const ContractModal: React.FC<ContractModalProps> = ({
         {currentAddress && (
           <div style={{ marginBottom: '20px' }}>
             <a
-              href={`https://scan.bohr.life/address/${currentAddress}`}
+              href={getExplorerAddressUrl(currentAddress)}
               target="_blank"
               rel="noreferrer"
               style={{
@@ -91,7 +92,7 @@ export const ContractModal: React.FC<ContractModalProps> = ({
                 textDecoration: 'none',
               }}
             >
-              <span>View on BohrScan Explorer</span>
+              <span>View on BotScan Explorer</span>
               <ExternalLink size={14} />
             </a>
           </div>
@@ -108,7 +109,7 @@ export const ContractModal: React.FC<ContractModalProps> = ({
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#818cf8', fontWeight: 600, fontSize: '0.85rem', marginBottom: '6px' }}>
             <Terminal size={16} />
-            <span>Deploy via Terminal</span>
+            <span>Deploy to BotChain Mainnet (Chain ID 677)</span>
           </div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.5 }}>
             To deploy using your private key in <code>.env</code>, run:
